@@ -9,19 +9,21 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const posts = {};
+
+// unused right now
 app.get('/posts', (req, res) => {
   res.send(posts);
 });
 
 // gets executed every single time someone tries to create a new post
-app.post('/posts', async (req, res) => {
+app.post('/posts/create', async (req, res) => {
   const id = randomBytes(4).toString('hex'); //kfeji5sjfie46he
   const { title } = req.body;
 
   posts[id] = {
     id, title
   };
-  await axios.post('http://localhost:4005/events', {
+  await axios.post('http://event-bus-srv:4005/events', { // emit a event to bus server
     type: 'PostCreated',
     data: {
       id, title
@@ -36,5 +38,6 @@ app.post('/events', (req, res) => {
 });
 
 app.listen(4000, () => {
+  console.log('v55000');
   console.log('Listening on 4000');
 });
