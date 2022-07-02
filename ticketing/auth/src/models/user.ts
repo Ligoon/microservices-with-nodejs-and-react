@@ -1,0 +1,54 @@
+// define mongo user model
+import mongoose from 'mongoose';
+import { Password } from '../services/password';
+
+// An interface that describes the properties
+// that are required to create a new User
+interface UserAttrs{
+  email: string;
+  password: string;
+}
+
+// An interface that describes the properties
+// that a User model has
+interface UserModel extends mongoose.Model<UserDoc>{
+  build(attrs: UserAttrs): UserDoc;
+}
+
+// An interface that describes the properties
+// that a User Document has
+interface UserDoc extends mongoose.Document{
+  email: string;
+  password: string;
+  // createdAt: string;
+  // updatedAt: string;
+}
+
+const userSchema = new mongoose.Schema({
+  email: {
+    type: String, // for mongoose not for typeScript
+    required: true 
+  },
+  password: {
+    type: String,
+    required: true
+  }
+});
+// everytime we save document to DB, it will execute the function to hash user's password
+userSchema.pre('save', async function(done){
+  if(this.isModified('password')){
+    const hashed = await Password.toHash(this.get('password'));
+    this.set('password', hashed);
+  }
+  done();
+});
+
+// add costum 'build' function to User model
+// and use this function to create a user since we need type checking
+userSchema.statics.build = (attrs: UserAttrs) => {
+  return new User(attrs);
+};
+
+const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
+
+export { User };

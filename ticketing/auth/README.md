@@ -1,1 +1,9 @@
-![](https://i.imgur.com/0ars5kf.png)
+![auth-arch](../img/auth-arch.png)
+
+- errors:
+- middlewares:
+- models:
+  - define user model for mongoDB
+- routes:
+- services:
+  - hashing password

@@ -14,5 +14,15 @@ Follow the steps from the [docker official website](https://docs.docker.com/desk
 ### Kubernetes (k8s)
 For Windows / WSL2 users, you just need to enable kubernetes in your Docker Desktop. Open Docker Desktop > Settings > Kubernetes > Enable Kubernetes. For Linux User, you need to install minikube.
 ### Ingress-Nginx
+Install by using kubernetes. Runs `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml`
+
+See：[NGINX Ingress Controller](https://kubernetes.github.io/ingress-nginx/deploy/#docker-desktop)
 ### Skaffold
+If you are using WSL2, remember install skaffold for **linux**. Follow the steps in this page: [installing skaffold](https://skaffold.dev/docs/install/)
+
 ## How to run
+If you installed all the requirements mentioned above, you can just run the following command in the `blog` folder or the `ticketing` folder.
+```
+cd ./microservices-with-nodejs-and-react/ticketing
+skaffold dev
+```
