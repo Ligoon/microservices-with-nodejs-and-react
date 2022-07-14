@@ -33,6 +33,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   }
+}, {
+  toJSON: { // delete password and __v from response and modify "_id" to "id"
+    transform(doc, ret){
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.password;
+      delete ret.__v;
+    }
+  }
 });
 // everytime we save document to DB, it will execute the function to hash user's password
 userSchema.pre('save', async function(done){
