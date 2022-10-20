@@ -18,3 +18,19 @@ build:
         manual:
           - src: 'src/**/*.ts' # watch these files
             dest: . # the destination in container
+    - image: 9heich/client # us.gcr.io/ticketing-352907/auth
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync: # how to handle files that changed
+        manual:
+          - src: '**/*.js' # watch these files
+            dest: . # the destination in container
+    - image: 9heich/tickets # us.gcr.io/ticketing-352907/auth
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync: # how to handle files that changed
+        manual:
+          - src: 'src/**/*.ts' # watch these files
+            dest: . # the destination in container

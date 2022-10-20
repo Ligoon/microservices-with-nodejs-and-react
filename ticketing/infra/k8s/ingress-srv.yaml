@@ -17,3 +17,17 @@ spec:
                 name: auth-srv
                 port:
                   number: 3000
+          - path: /api/tickets/?(.*)
+            pathType: Prefix
+            backend:  # send the request to servuce auth-srv
+              service:
+                name: tickets-srv
+                port:
+                  number: 3000
+          - path: /?(.*)
+            pathType: Prefix
+            backend:  # send the request to servuce client-srv
+              service:
+                name: client-srv
+                port:
+                  number: 3000
